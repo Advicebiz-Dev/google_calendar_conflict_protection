@@ -1,0 +1,13 @@
+.gc_guard_conflict_odoo, .gc_guard_conflict_google {
+  border: 2px solid var(--o-warning, #e8a317) !important;
+  outline: 1px dashed var(--o-warning, #e8a317);
+}
+.gc_guard_conflict_google {
+  opacity: .72;
+  border-style: dashed !important;
+}
+
+.gc_guard_schedule_overlap {
+  border: 2px solid var(--o-warning, #e8a317) !important;
+  box-shadow: 0 0 0 1px var(--o-warning, #e8a317);
+}

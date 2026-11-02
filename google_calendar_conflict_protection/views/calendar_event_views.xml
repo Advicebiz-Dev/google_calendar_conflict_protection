@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_calendar_event_form_google_guard" model="ir.ui.view">
+        <field name="name">calendar.event.form.google.conflict.guard</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="before">
+                <field name="gc_guard_conflict" invisible="1"/>
+                <field name="gc_guard_schedule_conflict" invisible="1"/>
+                <div class="alert alert-warning mx-3 mt-3" role="alert" invisible="not gc_guard_schedule_conflict">
+                    <h4>Conflito de horário entre reuniões</h4>
+                    <p>Existem duas ou mais reuniões reais que se sobrepõem. Ambas aparecem assinaladas como Conflito no calendário.
+                       Nenhuma delas será substituída ou eliminada automaticamente.</p>
+                    <field name="gc_guard_schedule_preview" readonly="1" nolabel="1"/>
+                    <p class="mb-0">Pode reagendar uma das reuniões para resolver a sobreposição. As horas são apresentadas no seu fuso horário.</p>
+                </div>
+                <div class="alert alert-warning mx-3 mt-3" role="alert" invisible="not gc_guard_conflict">
+                    <h4>Conflito de sincronização Google Calendar</h4>
+                    <p>O evento foi alterado nos dois sistemas. Nenhuma das versões será substituída sem confirmação.</p>
+                    <field name="gc_guard_conflict_message" readonly="1" nolabel="1"/>
+                    <p>Existem duas versões preservadas. No calendário aparecem dois blocos de aviso,
+                       mas apenas o evento original é uma reunião real. Nenhuma decisão será tomada automaticamente.</p>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <h5>Versão Odoo</h5>
+                            <field name="gc_guard_odoo_preview" readonly="1" nolabel="1"/>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Versão Google Calendar</h5>
+                            <field name="gc_guard_google_preview" readonly="1" nolabel="1"/>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 mt-2">
+                        <button name="action_gc_guard_accept_google" type="object"
+                                class="btn btn-outline-secondary" string="Manter Google Calendar"
+                                confirm="Esta ação irá substituir no Odoo as alterações deste evento pela versão atual do Google Calendar. Pretende continuar?"/>
+                        <button name="action_gc_guard_keep_odoo" type="object"
+                                class="btn btn-primary" string="Manter Odoo"
+                                confirm="Esta ação tentará substituir no Google Calendar os dados deste evento pela versão do Odoo. Se o Google mudar novamente, a substituição será bloqueada. Pretende continuar?"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
